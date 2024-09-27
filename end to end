@@ -4,7 +4,7 @@ import random
 import time
 
 # class TestAPI:
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = " "
 id_telegram = random.randint(1000, 9999) # Вставьте существующий user_id
 # id_telegram = 7312229
 print(f"\nGenerated random id_telegram: {id_telegram}")
