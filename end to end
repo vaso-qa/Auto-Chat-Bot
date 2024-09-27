@@ -1,0 +1,282 @@
+import requests
+import pytest
+import random
+import time
+
+# class TestAPI:
+BASE_URL = "http://127.0.0.1:8000"
+id_telegram = random.randint(1000, 9999) # Вставьте существующий user_id
+# id_telegram = 7312229
+print(f"\nGenerated random id_telegram: {id_telegram}")
+
+    # Тест создания пользователя (POST)
+    # Тест создания пользователя (POST)
+    # @classmethod
+
+
+def test_create_user():
+    url = f"{BASE_URL}/api/create_user"
+    data = {
+        "id_telegram": id_telegram,
+        "user_name": "string",
+        "count_coins": 0,
+        "count_pharmd": 65000,
+        "count_invited_friends": 0,
+        "purchase_count": 0,
+        "sale_count": 0,
+        "registration_date": "2024-09-26",
+        "active": True
+    }
+    response = requests.post(url, json=data)
+    assert response.status_code == 200  # проверка успешного создания
+    print(f"\n\033[94mКод ответа при создании пользователя:\033[0m {response.status_code}")
+    if response.status_code == 200:
+        print(f"\n\033[94mПользователь успешно создан\033[0m: {response.json()}")
+    else:
+        print(f"\n\033[91mОшибка создания пользователя:\033[0m {response.text}")
+
+
+    # Тест получения информации о пользователе (GET)
+def test_get_user_info():
+    url = f"{BASE_URL}/api/get_user_info/{id_telegram}"
+    response = requests.get(url)
+    assert response.status_code == 200  # проверка успешного получения
+    print(f"\n\033[94mКод ответа при получении информации о пользователе:\033[0m {response.status_code}")
+    if response.status_code == 200:
+        print(f"\n\033[94mИнформация о пользователе:\033[0m {response.json()}")
+    else:
+        print(f"\n\033[91mОшибка получения информации о пользователе:\033[0m {response.text}")
+
+# Тест получения всех друзей пользователя (GET)
+def test_get_friends():
+    url = f"{BASE_URL}/api/friends/{id_telegram}"
+    response = requests.get(url)
+    assert response.status_code == 200  # проверка успешного получения
+    print(f"\nКод ответа при получении списка друзей: {response.status_code}")
+    if response.status_code == 200:
+        print(f"\nСписок друзей: {response.json()}")
+    else:
+        print(f"\nОшибка получения списка друзей: {response.text}")
+
+# Тест получения количества монет пользователя (GET)
+def test_get_count_coins():
+    url = f"{BASE_URL}/api/get_count_coins/{id_telegram}"
+    response = requests.get(url)
+    assert response.status_code == 200  # проверка успешного получения
+    print(f"\n\033[94mКод ответа при получении количества монет:\033[0m {response.status_code}")
+    if response.status_code == 200:
+        print(f"\n\033[94mКоличество монет:\033[0m {response.json()}")
+    else:
+        print(f"\n\033[91mОшибка получения количества монет:\033[0m {response.text}")
+
+# Тест получения топ пользователей (GET)
+def test_get_top_users():
+    url = f"{BASE_URL}/api/get_top_users"
+    response = requests.get(url)
+    assert response.status_code == 200  # проверка успешного получения
+    print(f"\n\033[94mКод ответа при получении топ пользователей:\033[0m {response.status_code}")
+    if response.status_code == 200:
+        print(f"\n\033[94mТоп пользователей: \033[0m{response.json()}")
+    else:
+        print(f"\nОшибка получения топ пользователей: {response.text}")
+
+# Тест получения количества фарма (GET)
+def test_get_count_pharmd():
+    url = f"{BASE_URL}/api/get_count_pharmd/{id_telegram}"
+    response = requests.get(url)
+    assert response.status_code == 200  # проверка успешного получения
+    print(f"\n\033[94mКод ответа при получении количества фарма:\033[0m {response.status_code}")
+    if response.status_code == 200:
+        print(f"\n\033[94mКоличество фарма:\033[0m {response.json()}")
+    else:
+        print(f"\nОшибка получения количества фарма: {response.text}")
+
+# Тест получения транзакций (GET)
+def test_get_transactions():
+    url = f"{BASE_URL}/api/get_transactions/{id_telegram}"
+    response = requests.get(url)
+    assert response.status_code == 200  # проверка успешного получения
+    print(f"\n\033[94mКод ответа при получении транзакций: {response.status_code}")
+    if response.status_code == 200:
+        print(f"\nТранзакции: {response.json()}")
+    else:
+        print(f"\nОшибка получения транзакций: {response.text}")
+
+# Тест проверки выполнения задачи (GET)
+def test_check_task_complete():
+    task_id = 1  # Вставьте существующий task_id
+    url = f"{BASE_URL}/api/check_task_complete/{id_telegram}/{task_id}"
+    response = requests.get(url)
+    assert response.status_code == 200  # проверка успешного получения
+    print(f"\n\033[94mКод ответа при проверке выполнения задачи:\033[0m {response.status_code}")
+    if response.status_code == 200:
+        print(f"\nСтатус выполнения задачи: {response.json()}")
+    else:
+        print(f"\nОшибка проверки выполнения задачи: {response.text}")
+
+# Тест получения всех заданий (GET)
+def test_get_tasks():
+    url = f"{BASE_URL}/api/tasks/{id_telegram}"
+    response = requests.get(url)
+    assert response.status_code == 200  # проверка успешного получения
+    print(f"\nКод ответа при получении всех заданий: {response.status_code}")
+    if response.status_code == 200:
+        print(f"\nВсе задания: {response.json()}")
+    else:
+        print(f"\nОшибка получения всех заданий: {response.text}")
+
+
+# Тест получения количества участников (GET)
+def test_count_members():
+    url = f"{BASE_URL}/api/count_members"
+    response = requests.get(url)
+    assert response.status_code == 200  # проверка успешного получения
+    print(f"\nКод ответа при получении количества участников: {response.status_code}")
+    if response.status_code == 200:
+        print(f"\nКоличество участников: {response.json()}")
+    else:
+        print(f"\nОшибка получения количества участников: {response.text}")
+
+# Тест получения количества опубликованных постов за месяц (GET)
+def test_count_posts_by_type():
+    url = f"{BASE_URL}/api/count_posts_by_type"
+    response = requests.get(url)
+    assert response.status_code == 200  # проверка успешного получения
+    print(f"\nКод ответа при получении количества постов: {response.status_code}")
+    if response.status_code == 200:
+        print(f"\nКоличество опубликованных постов: {response.json()}")
+    else:
+        print(f"\nОшибка получения количества постов: {response.text}")
+#
+
+# Тест изменения количества монет (PATCH)
+
+def test_change_coins():
+    url = f"{BASE_URL}/api/change_coins/{id_telegram}"
+    data = {
+        "amount": 100,  # количество монет
+        "description": "string",  # сообщение к действию
+        "add": True  # true = добавить. false = убавить
+    }
+    response = requests.patch(url, json=data)
+
+    # Проверка, что запрос прошел успешно
+    assert response.status_code == 200  # проверка успешного изменения
+    print(f"\nКод ответа при изменении количества монет: {response.status_code}")
+
+    # Если запрос успешен
+    if response.status_code == 200:
+        response_json = response.json()
+        print(f"\nКоличество монет успешно изменено: {response_json}")
+
+        # Предполагаем, что в ответе содержатся обновленные данные о количестве монет
+        new_count_coins = response_json.get("count_coins")  # если в ответе есть поле 'count_coins'
+
+        if new_count_coins is not None:
+            print(f"\nОбновленное количество монет: {new_count_coins}")
+        else:
+            print("\nКоличество монет не было изменено или отсутствует в ответе.")
+    else:
+        print(f"\nОшибка изменения количества монет: {response.text}")
+
+
+# Тест изменения количества фарма (PATCH)
+def test_change_pharmd():
+    url = f"{BASE_URL}/api/change_pharmd/{id_telegram}"
+    data = {
+        "amount": 100,
+        "add": True
+    }
+    response = requests.patch(url, json=data)
+
+    # Проверка, что запрос прошел успешно
+    assert response.status_code == 200  # проверка успешного изменения
+    print(f"\nКод ответа при изменении количества фарма: {response.status_code}")
+
+    # Если запрос прошел успешно
+    if response.status_code == 200:
+        response_json = response.json()
+        print(f"\nКоличество фарма успешно изменено: {response_json}")
+
+        # Предполагаем, что в ответе содержатся обновленные данные о пользователе, например:
+        new_count_coins = response_json.get("count_coins")  # если в ответе есть поле 'count_coins'
+
+        if new_count_coins is not None:
+            print(f"\nОбновленное количество монет: {new_count_coins}")
+
+
+
+# Тест изменения количества спиннеров (PATCH)
+def test_change_spinners():
+    url = f"{BASE_URL}/api/change_spinners/{id_telegram}"
+    data = {
+        "amount": 10,
+        "add": True
+    }
+    response = requests.patch(url, json=data)
+
+    # Проверка, что запрос прошел успешно
+    assert response.status_code == 200  # проверка успешного изменения
+    print(f"\nКод ответа при изменении количества спиннеров: {response.status_code}")
+
+    # Если запрос прошел успешно
+    if response.status_code == 200:
+        response_json = response.json()
+        print(f"\nКоличество спиннеров успешно изменено: {response_json}")
+
+        # Предполагаем, что в ответе содержится обновленное количество спиннеров
+        new_count_spinners = response_json.get("count_spinners")  # если в ответе есть поле 'count_spinners'
+
+        if new_count_spinners is not None:
+            print(f"\nОбновленное количество спиннеров: {new_count_spinners}")
+
+    else:
+        print(f"\nОшибка изменения количества спиннеров: {response.text}")
+
+
+
+
+
+def test_change_pharmd():
+    url = f"{BASE_URL}/api/change_pharmd/{id_telegram}"
+    data = {
+        "amount": 100,
+        "add": True
+    }
+    response = requests.patch(url, json=data)
+
+    # Проверка, что запрос прошел успешно
+    assert response.status_code == 200  # проверка успешного изменения
+    print(f"\nКод ответа при изменении количества фарма: {response.status_code}")
+
+    # Если запрос прошел успешно
+    if response.status_code == 200:
+        response_json = response.json()
+        print(f"\nКоличество фарма успешно изменено: {response_json}")
+
+        # Предполагаем, что в ответе содержатся обновленные данные о пользователе, например:
+        new_count_coins = response_json.get("count_coins")  # если в ответе есть поле 'count_coins'
+
+        if new_count_coins is not None:
+            print(f"\nОбновленное количество монет: {new_count_coins}")
+
+
+# Тест удаления пользователя (DELETE)
+
+
+def test_delete_user():
+    confirmation = input("Вы уверены, что хотите удалить пользователя? (y/n): ")
+    if confirmation.lower() != 'y':
+        print("\nУдаление пользователя отменено.")
+        return  # Завершаем функцию, если пользователь не подтвердил
+    url = f"{BASE_URL}/api/delete_user"
+    data = {
+        "id_telegram": id_telegram  # Укажите id_telegram пользователя, которого нужно удалить
+    }
+    response = requests.delete(url, json=data)
+    assert response.status_code == 200  # проверка успешного удаления
+    print(f"\nКод ответа при удалении пользователя: {response.status_code}")
+    if response.status_code == 200:
+        print(f"\nПользователь успешно удалён: {response.json()}")
+    else:
+        print(f"\nОшибка удаления пользователя: {response.text}")
